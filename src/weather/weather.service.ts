@@ -32,23 +32,13 @@ export class WeatherService {
     return { ...result, cityName };
   }
 
-  async getForecast(params: { city: string; lat: number; lon: number }) {
-    const { city, lat, lon } = params;
+  async getForecast(params: { lat: number; lon: number }) {
+    const { lat, lon } = params;
 
     if (lat && lon) {
       const { daily } = await this.openWeatherService.getWeather(lat, lon);
 
       return daily;
     }
-
-    const { lat: latitude, lon: longitude } =
-      await this.locationService.getGeolocation(city);
-
-    const { daily } = await this.openWeatherService.getWeather(
-      latitude,
-      longitude,
-    );
-
-    return daily;
   }
 }
